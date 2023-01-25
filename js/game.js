@@ -32,10 +32,10 @@ function clickedOnMine() {
 
 function revealCells(i, j) {
   var negs = findNegs(gBoard, i, j)
-  var cellsWerentShown= []
+  var cellsWerentShown = []
   negs.push({ i, j })
-  negs.forEach(neg =>{
-    if(!gBoard[neg.i][neg.j].isShown){
+  negs.forEach(neg => {
+    if (!gBoard[neg.i][neg.j].isShown) {
       cellsWerentShown.push(neg)
       gBoard[neg.i][neg.j].isShown = true
     }
@@ -150,8 +150,8 @@ function userCreatesMines() {
     setMinesNegsCount(gBoard)
     startTimer()
     renderBoard(gBoard)
-    gGame.userMinesMode= false
-    gFirstTurn =false
+    gGame.userMinesMode = false
+    gFirstTurn = false
     return
   }
   gLevel.MINES = 0
@@ -160,13 +160,11 @@ function userCreatesMines() {
   gGame.userMinesMode = true
 }
 
-function undo(){
-  game = gStatesSave.pop()
-   gGame = game.game
-   
-   gBoard = game.board
- 
-  renderBoard(gBoard)
-   resetHeader(gLevel.HEARTS- game.game.heartsUsed,gLevel.HINTS - game.game.hintsUsed)
-}
+// function undo(){
+//   game = gStatesSave.pop()
+//    gGame = game.game
+//    gBoard = game.board
+//    renderBoard(gBoard)
+//    resetHeader(gLevel.HEARTS- game.game.heartsUsed,gLevel.HINTS - game.game.hintsUsed)
+// }
 

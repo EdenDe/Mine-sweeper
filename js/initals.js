@@ -86,12 +86,12 @@ function startTimer(){
 }
 
 
-function saveStateGame(board){
-  gStatesSave.push({
-    board: [...board],
-    game: gGame
-  })
-}
+// function saveStateGame(board){
+//   gStatesSave.push({
+//     board: [...board],
+//     game: gGame
+//   })
+// }
 
 
 

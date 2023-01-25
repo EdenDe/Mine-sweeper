@@ -2,8 +2,6 @@ const MINE = '&#128163;'
 
 
 function setMines(board,pos) {
- // board[1][2].isMine = true
- // board[3][2].isMine = true
 
   for (let i = 0; i < gLevel.MINES;) {
     
@@ -24,26 +22,6 @@ function setMineByUser(elCell,i,j){
     renderCell(elCell.dataset,MINE)
 
 }
-
-
-// function negsCount(board, rowIdx, colIdx) {
-//   var sum = 0
-
-//   for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
-//     if (i < 0 || i >= board.length) continue
-
-//     for (var j = colIdx - 1; j <= colIdx + 1; j++) {
-//       if (j < 0 || j >= board[i].length) continue
-//       if (rowIdx === i && colIdx === j) continue
-
-//       if (board[i][j].isMine) sum++
-
-//     }
-//   }
-
-//   return sum
-// }
-
 
 function setMinesNegsCount(board) {
   for (var i = 0; i < board.length; i++) {
