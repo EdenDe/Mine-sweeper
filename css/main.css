@@ -1,0 +1,111 @@
+*{
+  box-sizing: border-box;
+  font-family: 'Calibri', 'sans-serif';
+  text-align: center;
+}
+body{
+  height: 100%;
+}
+
+table{
+  margin: auto;
+ 
+}
+
+.lives, .smile,.hints{
+  width: 30%;
+
+}
+
+.smile span{
+  font-size: 40px
+}
+
+.timer, .mines{
+  width: 40%;
+}
+
+button{
+  padding:7px;
+  font-size: 15px;
+  width: 25%;
+  margin: 5px;
+
+}
+
+.fa-heart, .fa-lightbulb-o{
+  font-size: 30px;
+  margin: 5px;
+}
+
+header div{
+  display: inline-block;
+}
+
+header{
+  width:500px;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+td[data-minesaround="1"]{
+ color: red;
+}
+td[data-minesaround="2"] {
+ color:blue
+}
+td[data-minesaround="3"] {
+  color:blue
+ }
+ td[data-minesaround="4"] {
+  color:blue
+ }
+ td[data-minesaround="5"] {
+  color:blue
+ }
+ td[data-minesaround="6"] {
+  color:blue
+ }
+ td[data-minesaround="7"] {
+  color:blue
+ }
+ td[data-minesaround="8"] {
+  color:blue
+ }
+
+
+.cell{
+  width:30px;
+  height: 30px;
+  /* background-image:linear-gradient(#1a793b , #4a8a60); */
+  border-radius: 20%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  cursor: pointer;
+  font-weight: bold;
+
+}
+
+.safeMark{
+  background-color: yellow;
+}
+
+footer{
+  position: absolute;
+  bottom: 0;
+  height: 10%;
+  background-color: #4a8a60;
+  width: 100%;
+}
+
+
+.shown{
+  background-image:linear-gradient(#b3ad8d , #4a8a60);
+  box-shadow: 0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 30px 0 rgba(0, 0, 0, -0.5);
+
+}
+
+.fa-heart{
+  color:red;
+
+
+}
