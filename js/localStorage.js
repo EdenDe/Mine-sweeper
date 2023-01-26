@@ -1,3 +1,5 @@
+'use strict'
+
 var gTopScores = {
   'Beginner':null,
   'Medium':null,

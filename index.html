@@ -2,27 +2,51 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">            
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Pacman</title>
-    <link rel="stylesheet" href="css/app.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/icons.css">
+  <link rel="stylesheet" href="css/cells.css">
+  <title>Document</title>
 </head>
 
-<body onload="init()" onkeyup="movePacman(event)">
-    <h2>Score: <span>0</span></h2>
-    <div class="modal"> 
-     <span> GAME OVER </span>   
-     <button onclick="init()"> play again ! </button>
-    </div>
+<body onload="onInit()">
+  <div class="btnsTop">
+    <button class="btnUndo" onclick="onUndo()"> <i class="fa fa-history"></i> </button>
+    <button class="btnUserCreate" onclick="userCreatesMines()"> </button>
+    <button onclick="toggleTheme(this)"> <i class="fa fa-sun-o"></i> </button>
+  </div>
+  <header>
+    <h1> Mine Sweeper </h1>
+    <div class="lives"> </div>
+    <div class="smile"> <span onclick="onInit()"> </span> </div>
+    <div class="hints"> </div>
+    <div class="timer"> <i class="fa fa-clock-o"></i> <span> 0 </span> </div>
+    <div class="mines"> <i class="fa fa-bomb"></i> <span> 0 </span> </div>
+    <button class="btnSafeClick" onclick="onSafeClick(this)"> <span> 3 </span> Safe Click </button>
+    <button class="btnMegaHint" onclick="onMegaHint()"> Mega Hint </button>
+    <button class="btnExterminator" onclick="onExterminator()"> Exterminator </button>
+    <h2>Choose your level</h2>
+    <button class="btnLevel" onclick="changeLevel(4,2)"> Beginner </button>
+    <button class="btnLevel" onclick="changeLevel(8,14)"> Medium </button>
+    <button class="btnLevel" onclick="changeLevel(12,32)"> Expert </button>
+  </header>
+  <div class="board">
+  </div>
+  <p> 
 
-    <div class="board-container"></div>
-    <script src="js/utils.js"></script>
-    <script src="js/game.js"></script>
-    <script src="js/pacman.js"></script>
-    <script src="js/ghost.js"></script>
+  </p>
+  <div class="topScores">
 
+  </div>
+  <footer> Eden Derhy </footer>
+  <script src="js/util.js"></script>
+  <script src="js/initals.js"> </script>
+  <script src="js/game.js"></script>
+  <script src="js/mines.js"></script>
+  <script src="js/localStorage.js"></script>
 </body>
 
 </html>

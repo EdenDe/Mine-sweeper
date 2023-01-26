@@ -1,49 +1,25 @@
-const MINE = '&#128163;'
+'use strict'
 
-
-function setMines(board,pos) {
- // board[1][2].isMine = true
- // board[3][2].isMine = true
-
+function setMines(board, pos) {
   for (let i = 0; i < gLevel.MINES;) {
-    
-    var randomI = getRandomInt(0,board.length)
-    var randomJ = getRandomInt(0,board.length)
 
-    if(randomI === pos.i && randomJ === pos.j)continue
-    if(board[randomI][randomJ].isMine) continue
+    var randomI = getRandomInt(0, board.length)
+    var randomJ = getRandomInt(0, board.length)
 
-    board[randomI][randomJ].isMine = true  
+    if (randomI === pos.i && randomJ === pos.j) continue
+    if (board[randomI][randomJ].isMine) continue
+
+    board[randomI][randomJ].isMine = true
     i++
   }
 }
 
-function setMineByUser(elCell,i,j){
-   gLevel.MINES++
-    gBoard[i][j].isMine = true
-    renderCell(elCell.dataset,MINE)
-
+function setMineByUser(elCell, i, j) {
+  gLevel.MINES++
+  gBoard[i][j].isMine = true
+  renderCell(elCell.dataset, ICONS.MINE)
+  document.querySelector('p').innerText = 'click on the same button when you are done'
 }
-
-
-// function negsCount(board, rowIdx, colIdx) {
-//   var sum = 0
-
-//   for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
-//     if (i < 0 || i >= board.length) continue
-
-//     for (var j = colIdx - 1; j <= colIdx + 1; j++) {
-//       if (j < 0 || j >= board[i].length) continue
-//       if (rowIdx === i && colIdx === j) continue
-
-//       if (board[i][j].isMine) sum++
-
-//     }
-//   }
-
-//   return sum
-// }
-
 
 function setMinesNegsCount(board) {
   for (var i = 0; i < board.length; i++) {
@@ -52,6 +28,51 @@ function setMinesNegsCount(board) {
     }
   }
 }
+
+function findHiddenMines() {
+  var mines = []
+  for (var i = 0; i < gBoard.length; i++) {
+    for (var j = 0; j < gBoard[i].length; j++) {
+      if (gBoard[i][j].isMine && !gBoard[i][j].isShown) mines.push(gBoard[i][j])
+    }
+  }
+
+  return mines
+}
+
+function showAllMines() {
+  findHiddenMines().forEach(mine => mine.isShown = true)
+}
+
+function onExterminator() {
+  var hiddenMines = findHiddenMines()
+  var mines = []
+
+  for (var i = 0; i < 3; i++) {
+    if (!hiddenMines.length) break
+    var mine = hiddenMines.splice(getRandomInt(0, hiddenMines.length), 1)[0]
+    mine.isShown = true
+    mines.push(mine)
+    renderBoard(gBoard)
+  }
+
+  gLevel.MINES -= mines.length
+  document.querySelector('.mines span').innerText = gLevel.MINES
+  document.querySelector('p').innerText = mines.length + ' bombs destroyed'
+  //did two fors so the user can see what happened
+  gGame.isOn = false
+  setTimeout(() => {
+    for (var i = 0; i < mines.length; i++) {
+      mines[i].isMine = false
+      mines[i].isShown = false
+    }
+    setMinesNegsCount(gBoard)
+    renderBoard(gBoard)
+    gGame.isOn = true
+  }, 1000)
+
+}
+
 
 
 

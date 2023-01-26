@@ -1,4 +1,4 @@
-
+'use strict'
 
 function renderBoard(board) {
   var strHTML = '<table><tbody>'
@@ -8,10 +8,10 @@ function renderBoard(board) {
     strHTML += '<tr>'
     for (var j = 0; j < board[0].length; j++) {
       const cell = board[i][j]
-
+   
       var data = `data-minesAround="${cell.minesAroundCount}"`
       var classes = 'cell'
-      var insertHTML = EMPTY
+      var insertHTML = ICONS.EMPTY
       if (cell.isShown) {
         classes += ' shown'
         if (cell.minesAroundCount > 0) {
@@ -19,11 +19,11 @@ function renderBoard(board) {
         }
         if (cell.isMine) {
           classes += ' mine'
-          insertHTML = MINE
+          insertHTML = ICONS.MINE
         }
       }
       if (cell.isMarked){
-        insertHTML = FLAG
+        insertHTML = ICONS.FLAG
         data = ''
       }
 
@@ -45,10 +45,6 @@ function renderBoard(board) {
 function renderCell(location, value) {
   const elCell = document.querySelector(`[data-i="${location.i}"][data-j="${location.j}"]`)
   elCell.innerHTML = value
-}
-
-function getRandomIntInclusive(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 function getRandomInt(max, min) {

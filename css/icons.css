@@ -1,0 +1,58 @@
+.fa-flag {
+  color:#F7F5EB;
+}
+
+.fa-heart {
+  color: rgb(204, 94, 94);
+  cursor: pointer;
+}
+
+.fa-lightbulb-o{
+  color: var(--hints-color);
+  cursor: pointer;
+}
+
+.fa-heart,
+.fa-lightbulb-o {
+  font-size: 30px;
+  margin: 5px;
+}
+
+.smile span {
+  font-size: 50px
+}
+
+header .fa-bomb{
+  color:var(--font-color);
+}
+
+.fa-bomb{
+  color:black;
+  transform: 1s;
+}
+
+.lives,
+.smile,
+.hints {
+  width: 30%;
+}
+
+.timer,
+.mines {
+  width: 40%;
+  background-color: var(--box-background-color);
+  margin: 5px;
+  padding: 5px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+button.btnUserCreate.making::after {
+  content: url('https://api.iconify.design/ic/twotone-done.svg');
+}
+
+button.btnUserCreate::after {
+  content: url('https://api.iconify.design/mdi/pickaxe.svg');
+}
+
