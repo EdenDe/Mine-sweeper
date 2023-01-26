@@ -1,0 +1,73 @@
+*{
+  font-family: 'Calibri';
+  text-align: center;
+}
+
+body {
+  background-color: black;
+  color: white;
+}
+
+.cell {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  font-size: 1.5em;
+}
+
+img {
+  height: 20px;
+  margin-top: 10px;
+  margin-bottom: auto;
+}
+
+table{
+  margin: auto;
+}
+
+.modal span {
+  font-size: 50px;
+  font-weight: bold;
+  color: white;
+  display: block;
+  margin-bottom: 20px;
+}
+
+button {
+  width: 40%;
+  height: 50px;
+  border-radius: 10px;
+  padding: 10px;
+  margin: auto;
+  font-size: 18px;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+h2{
+  font-size: 30px;
+}
+
+.modal {
+  display: none;
+  background-color: #b53710;
+  border: 5px solid white;
+  width: 300px;
+  height: 150px;
+  padding: 20px;
+  position: absolute;
+  z-index: 1;
+  top: 200px;
+  left: calc(50% - 175px);
+}
+
+
+.superFood {
+  height: 15px;
+  width: 15px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+}

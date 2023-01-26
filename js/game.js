@@ -1,172 +1,112 @@
-var gTimer
+'use strict'
 
+const WALL = '<img src="./img/wall.png">'
+const FOOD = '.'
+const EMPTY = ' '
+const SUPER_FOOD = '<span class="superFood"></span>'
+const CHERRY = '<img src="./img/cherry.png">'
 
-function onHintClick(elBolb) {
-  elBolb.style.color = '#948228'
-  elBolb.style.fontSize = '40px'
-  elBolb.classList.add('hintChose')
-
-  gGame.hintMode = true
-  gGame.hintsUsed++
-  saveStateGame()
+const gGame = {
+    score: 0,
+    isOn: false
 }
+var gBoard
+var gFoodCounter
+var gAddCherryIntravel
+var gIntervalSuperFood
 
-function firstTurn(i, j) {
-  gFirstTurn = false
+function init() {
+    document.querySelector('.modal').style.display = "none"
 
-  setMines(gBoard, { i, j })
-
-  setMinesNegsCount(gBoard)
-  startTimer()
-}
-
-
-function clickedOnMine() {
-  if (!gGame.isOn) return
-  var hearts = document.querySelector('.lives')
-  hearts.removeChild(hearts.lastChild)
-  gGame.heartsUsed++
-
-  if (hearts.childElementCount === 0) gameOver("LOSE")
-}
-
-function revealCells(i, j) {
-  var negs = findNegs(gBoard, i, j)
-  var cellsWerentShown= []
-  negs.push({ i, j })
-  negs.forEach(neg =>{
-    if(!gBoard[neg.i][neg.j].isShown){
-      cellsWerentShown.push(neg)
-      gBoard[neg.i][neg.j].isShown = true
+    gFoodCounter = {
+        numOfFood: 0,
+        numOfFoodEaten: 0
     }
-  })
-  renderBoard(gBoard)
 
-  setTimeout(() => {
-    cellsWerentShown.forEach(neg => gBoard[neg.i][neg.j].isShown = false)
-    renderBoard(gBoard)
-    gGame.hintMode = false
-    document.querySelector('.hintChose').remove()
-  }, 1000)
+    gBoard = buildBoard()
+    createPacman(gBoard)
+    createGhosts(gBoard)
+
+    renderBoard(gBoard, '.board-container')
+    gGame.score = 0
+    gGame.isOn = true
+
+    updateScore(0)
+
+    gAddCherryIntravel = setInterval(addCherry, 15000)
+    gIntervalSuperFood = setInterval(toggleSuperFood, 500)
 }
 
-function onCellClicked(elCell, i, j) {
-  if (!gGame.isOn) return
-  if (gGame.userMinesMode) {
-    setMineByUser(elCell, i, j)
-    return
-  }
-  if (gFirstTurn) firstTurn(i, j)
-  if (gGame.hintMode) {
-    revealCells(i, j)
-    return
-  }
-
-  const cell = gBoard[i][j]
-  cell.isShown = true
-  gGame.shownCount++
-
-  if (cell.isMine) {
-    elCell.innerHTML = MINE
-    clickedOnMine()
-  } else {
-    elCell.innerText = cell.minesAroundCount
-    if (cell.minesAroundCount === 0) expandShown(gBoard, i, j)
-    renderBoard(gBoard)
-  }
-
-  saveStateGame(gBoard)
-  checkGameOver()
+function toggleSuperFood() {
+    document.querySelectorAll('.superFood').forEach(superFood => superFood.classList.toggle('hidden'))
 }
 
-function onCellMarked(elCell, i, j) {
-  const cell = gBoard[i][j]
-  cell.isMarked = !cell.isMarked
-  elCell.innerHTML = cell.isMarked ? FLAG : EMPTY
-  gGame.markedCount += cell.isMarked ? 1 : -1
+function buildBoard() {
+    const size = 10
+    const board = []
 
-  saveStateGame()
-  checkGameOver()
-}
+    for (var i = 0; i < size; i++) {
+        board.push([])
 
-function checkGameOver() {
-  if (gGame.markedCount + gGame.heartsUsed === gLevel.MINES
-    && gGame.shownCount + gGame.markedCount === gLevel.SIZE ** 2) {
-    gameOver("WIN")
-  }
-}
+        for (var j = 0; j < size; j++) {
 
-function expandShown(board, i, j) {
-  var negs = findNegs(board, i, j)
-  negs.push({ i, j })
+            if (i === 0 || i === size - 1 ||
+                j === 0 || j === size - 1 ||
+                (j === 3 && i > 4 && i < size - 2)) {
+                board[i][j] = WALL
+                continue
+            }
 
-  negs.forEach(neg => {
-    if (!board[neg.i][neg.j].isShown) {
-      board[neg.i][neg.j].isShown = true
-      gGame.shownCount++
-
-      //renderCell(neg, board[neg.i][neg.j].minesAroundCount)
-      if (gBoard[neg.i][neg.j].minesAroundCount === 0) expandShown(board, neg.i, neg.j)
+            board[i][j] = FOOD
+            gFoodCounter.numOfFood++
+        }
     }
-  })
+    board[1][1] = SUPER_FOOD
+    board[1][size - 2] = SUPER_FOOD
+    board[size - 2][1] = SUPER_FOOD
+    board[size - 2][size - 2] = SUPER_FOOD
+
+    //5 because 4 are superfood and one is pacman!
+    gFoodCounter.numOfFood -= 5
+    return board
 }
 
-function gameOver(howEnded) {
-  if (howEnded === "WIN") checkIfTopScore()
-
-  document.querySelector('.smile span').innerHTML = howEnded === "WIN" ? AWESOME : LOSE
-  clearInterval(gTimer)
-  console.log("Game Over")
+function updateScore(diff) {
+    gGame.score += diff
+    const elScore = document.querySelector('span')
+    elScore.innerText = gGame.score
 }
 
-function onSafeClick(elBtn) {
-  var safeCells = []
-  for (var i = 0; i < gBoard.length; i++) {
+function gameOver(messege) {
+    document.querySelector('.modal').style.display = "block"
+    document.querySelector('.modal span').innerText = messege
+    gGame.isOn = false
 
-    for (var j = 0; j < gBoard.length; j++) {
-      if (!gBoard[i][j].isMine && !gBoard[i][j].isShown) safeCells.push({ i, j })
+    clearInterval(gIntervalGhosts)
+    clearInterval(gAddCherryIntravel)
+    clearInterval(gIntervalSuperFood)
+}
+
+function addCherry() {
+    var pos = getEmptyPos()
+    if (!pos) return
+    gBoard[pos.i][pos.j] = CHERRY
+    renderCell(pos, CHERRY)
+}
+
+function getEmptyPos() {
+    var emptyCells = []
+    for (var i = 0; i < gBoard.length; i++) {
+        for (var j = 0; j < gBoard[i].length; j++) {
+            gBoard[i][j]
+
+            if (gBoard[i][j] === EMPTY) {
+                emptyCells.push({ i, j })
+            }
+        }
     }
-  }
 
-  const safeCell = safeCells[getRandomInt(0, safeCells.length)]
-  const elTd = document.querySelector(`[data-i="${safeCell.i}"][data-j="${safeCell.j}"]`)
-  elTd.classList.add('safeMark')
-  gGame.safeClicksLeft--
-  elBtn.innerText = gGame.safeClicksLeft + " safe clicks"
-
-  if (gGame.safeClicksLeft === 0) {
-    elBtn.disabled = true
-  }
-
-  setTimeout(() => {
-    elTd.classList.remove('safeMark')
-  }, 5000);
+    var randonInx = getRandomIntInclusive(emptyCells.length - 1, 0)
+    var pos = emptyCells[randonInx]
+    return pos
 }
-
-
-function userCreatesMines() {
-  if (gGame.userMinesMode) {
-    document.querySelector('.btnUserCreate').innerText = "Manually Create"
-    setMinesNegsCount(gBoard)
-    startTimer()
-    renderBoard(gBoard)
-    gGame.userMinesMode= false
-    gFirstTurn =false
-    return
-  }
-  gLevel.MINES = 0
-  document.querySelector('.btnUserCreate').innerText = "Done, play!"
-  onInit()
-  gGame.userMinesMode = true
-}
-
-function undo(){
-  game = gStatesSave.pop()
-   gGame = game.game
-   
-   gBoard = game.board
- 
-  renderBoard(gBoard)
-   resetHeader(gLevel.HEARTS- game.game.heartsUsed,gLevel.HINTS - game.game.hintsUsed)
-}
-
