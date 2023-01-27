@@ -36,10 +36,9 @@ function firstTurn(i, j) {
   startTimer()
 }
 
-function clickedOnMine() {
+function clickedOnMine(elCell) {
   if (!gGame.isOn) return
-  var boom = new Audio('audio/short-explosion.wav')
-  boom.play()
+  explodeMine(elCell)
 
   var hearts = document.querySelector('.lives')
   hearts.removeChild(hearts.lastChild)
@@ -89,6 +88,9 @@ function revealCells(cell1, cell2) {
 
 function onCellClicked(elCell, i, j) {
   if (!gGame.isOn) return
+  const cell = gBoard[i][j]
+  if(cell.isShown || cell.isMarked) return
+
   switch (gGame.mode) {
     case MODES.REGULAR:
       document.querySelector('p').innerText = ''
@@ -118,23 +120,20 @@ function onCellClicked(elCell, i, j) {
     default:
       break
   }
-
   saveStateGame()
 
-  const cell = gBoard[i][j]
   cell.isShown = true
   gGame.shownCount++
-  elCell.disabled = true
 
   if (cell.isMine) {
-    elCell.innerHTML = ICONS.MINE
-    clickedOnMine()
+    clickedOnMine(elCell)
   } else {
     elCell.innerText = cell.minesAroundCount
     if (cell.minesAroundCount === 0) expandShown(gBoard, i, j)
+
+    renderBoard(gBoard)
   }
 
-  renderBoard(gBoard)
   checkGameOver()
 }
 
@@ -172,12 +171,18 @@ function expandShown(board, i, j) {
 }
 
 function gameOver(howEnded) {
+  gGame.isOn = false
+
+  document.querySelectorAll('.cell').forEach(td =>{
+    td.removeEventListener('mouseenter',changeSmileyToSuprised)
+    td.removeEventListener('mouseleave',changeSmileyToNormal)
+  })
+
+  document.querySelector('.smile span').innerHTML = howEnded === "WIN" ? ICONS.AWESOME : ICONS.LOSE
   if (howEnded === "WIN") checkIfTopScore()
   else showAllMines()
 
-  document.querySelector('.smile span').innerHTML = howEnded === "WIN" ? ICONS.AWESOME : ICONS.LOSE
   clearInterval(gTimer)
-  gGame.isOn = false
 }
 
 function onSafeClick(elBtn) {
@@ -204,7 +209,7 @@ function onSafeClick(elBtn) {
 
 function userCreatesMines() {
   if (gGame.mode === MODES.PICK_MINES) {
-    document.querySelector('.btnUserCreate').classList.remove('making')
+    document.querySelector('.btnUserCreate').innerHTML = ICONS.PICKAXE
     document.querySelector('p').innerText = 'now you can start playing'
     setMinesNegsCount(gBoard)
     startTimer()
@@ -214,7 +219,7 @@ function userCreatesMines() {
   }
   clearInterval(gTimer)
   gLevel.MINES = 0
-  document.querySelector('.btnUserCreate').classList.add('making')
+  document.querySelector('.btnUserCreate').innerHTML = ICONS.DONE
   document.querySelector('p').innerText = 'place your mines'
   onInit()
   gGame.mode = MODES.PICK_MINES
@@ -238,3 +243,6 @@ function onMegaHint() {
   gGame.mode = MODES.MEGA_HINT
   document.querySelector('p').innerText = 'click on any top left cell'
 }
+
+
+

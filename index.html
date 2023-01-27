@@ -15,8 +15,10 @@
 <body onload="onInit()">
   <div class="btnsTop">
     <button class="btnUndo" onclick="onUndo()"> <i class="fa fa-history"></i> </button>
-    <button class="btnUserCreate" onclick="userCreatesMines()"> </button>
-    <button onclick="toggleTheme(this)"> <i class="fa fa-sun-o"></i> </button>
+    <button class="btnUserCreate" onclick="userCreatesMines()"><i> &#9935; </i> </button>
+    <button onclick="toggleTheme()"> <div class="sun sun-logo"> <i class="fa fa-sun-o"></i>  </div>
+      <div class="moon moon-logo"> <i class="fa fa-moon-o"></i>  </div>
+    </button>
   </div>
   <header>
     <h1> Mine Sweeper </h1>
@@ -33,20 +35,23 @@
     <button class="btnLevel" onclick="changeLevel(8,14)"> Medium </button>
     <button class="btnLevel" onclick="changeLevel(12,32)"> Expert </button>
   </header>
+
   <div class="board">
   </div>
-  <p> 
+  <p>
 
   </p>
   <div class="topScores">
 
   </div>
+
   <footer> Eden Derhy </footer>
   <script src="js/util.js"></script>
   <script src="js/initals.js"> </script>
+  <script src="js/localStorage.js"></script>
   <script src="js/game.js"></script>
   <script src="js/mines.js"></script>
-  <script src="js/localStorage.js"></script>
+ 
 </body>
 
 </html>

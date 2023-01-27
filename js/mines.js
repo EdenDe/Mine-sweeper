@@ -40,8 +40,35 @@ function findHiddenMines() {
   return mines
 }
 
+function explodeMine(elCell){
+  var boom = new Audio('audio/short-explosion.wav')
+  elCell.classList.remove('covered')
+  elCell.innerHTML = ICONS.EXPLOSION
+  boom.play()
+  elCell.classList.add('shown')
+
+  setTimeout(()=>{
+    elCell.innerHTML = ICONS.MINE
+  },5000)
+}
+
 function showAllMines() {
-  findHiddenMines().forEach(mine => mine.isShown = true)
+  //findHiddenMines().forEach(mine => mine.isShown = true)
+  var mines = []
+
+  for (var i = 0; i < gBoard.length; i++) {
+    for (var j = 0; j < gBoard[i].length; j++) {
+      if (gBoard[i][j].isMine && !gBoard[i][j].isShown) mines.push({ i, j })
+    }
+  }
+
+  var popInterval = setInterval(() => {
+    var mine = mines.pop()
+    var elCell = document.querySelector(`[data-i="${mine.i}"][data-j="${mine.j}"]`)
+    explodeMine(elCell)
+    
+    if(!mines.length || gGame.isOn) clearInterval(popInterval) 
+  }, 500)
 }
 
 function onExterminator() {

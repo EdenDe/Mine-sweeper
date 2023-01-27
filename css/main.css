@@ -1,6 +1,6 @@
 * {
   box-sizing: border-box;
-  font-family: 'Calibri', 'sans-serif';
+  font-family: 'Calibri', 'sans-serif', 'rubik';
   text-align: center;
 }
 
@@ -13,8 +13,10 @@ body {
   --transition-delay: 1s;
   --box-background-color: #CEEDC7;
 
+  margin: 0;
   height: 100%;
 
+  transition: background-color 1s;
   background-color: var(--background-color);
   color: var(--text-color);
   user-select: none;
@@ -32,7 +34,7 @@ table {
   margin: auto;
 }
 
-h1{
+h1 {
   font-size: 60px;
   margin: 7px;
 }
@@ -50,8 +52,9 @@ header button {
   font-weight: 600;
 }
 
-h2{
-  margin:5px
+h2 {
+  margin-bottom: 2px;
+  margin-top: 5px;
 }
 
 header div {
@@ -91,24 +94,8 @@ button:disabled {
   cursor: 'default';
 }
 
-.btnsTop {
-  position: absolute;
-  right: 2px;
-  height: 50px;
 
+p {
+  margin-top: 5px
 }
 
-.btnsTop button {
-  width: 50px;
-  font-size: 20px;
-  background-color: #4a8a60;
-}
-
-button{
-  cursor: pointer;
-}
-
-
-p{
-  margin-top:5px
-}

@@ -54,3 +54,7 @@ td[data-minesaround="8"] {
   transform: scale(0.80);
 }
 
+.cell.isShown:active{
+  transform: scale(1);
+}
+

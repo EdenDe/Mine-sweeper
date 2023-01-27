@@ -1,5 +1,5 @@
 .fa-flag {
-  color:#F7F5EB;
+  color: #F7F5EB;
 }
 
 .fa-heart {
@@ -7,7 +7,7 @@
   cursor: pointer;
 }
 
-.fa-lightbulb-o{
+.fa-lightbulb-o {
   color: var(--hints-color);
   cursor: pointer;
 }
@@ -22,13 +22,12 @@
   font-size: 50px
 }
 
-header .fa-bomb{
-  color:var(--font-color);
+header .fa-bomb {
+  color: var(--font-color);
 }
 
-.fa-bomb{
-  color:black;
-  transform: 1s;
+.fa-bomb {
+  color: black;
 }
 
 .lives,
@@ -48,11 +47,117 @@ header .fa-bomb{
   font-weight: bold;
 }
 
-button.btnUserCreate.making::after {
-  content: url('https://api.iconify.design/ic/twotone-done.svg');
+.moon-logo {
+  opacity: 0;
+  transform: translateY(20%) rotateZ(50deg);
+  transition: all 1s ease-out;
+  top: 3px;
+  position: absolute;
 }
 
-button.btnUserCreate::after {
-  content: url('https://api.iconify.design/mdi/pickaxe.svg');
+.sun-logo {
+  opacity: 1;
+  transform: translateY(0) rotateZ(0deg);
+  transition: all 1s ease-out;
 }
 
+.animate-sun {
+  opacity: 0;
+  transform: translateY(20%) rotateZ(100deg);
+  color: aliceblue;
+}
+
+.animate-moon {
+  opacity: 1;
+  transform: translateY(0%) rotateZ(0deg);
+  color: aliceblue;
+}
+
+.btnsTop:last-child {
+  position: absolute;
+}
+
+.btnsTop {
+  position: absolute;
+  right: 2px;
+  height: 50px;
+  box-sizing: border-box;
+}
+
+.btnsTop button:nth-child(2) i {
+  font-size: 18px;
+  margin: 0px;
+}
+
+.btnsTop button {
+  width: 50px;
+  height: 20;
+  font-size: 20px;
+  background-color: var(--box-background-color);
+}
+
+button,
+.smile span {
+  cursor: pointer;
+}
+
+.explode .fa-bomb {
+  font-size: 20px;
+  transition: 2s;
+}
+
+.fa-bomb {
+  bottom: 2px;
+  left: 2px;
+  position: relative;
+}
+
+.candle2__fire {
+  top: 3px;
+  align-self: center;
+  left: 12%;
+  position: relative;
+  width: 8px;
+  height: 14px;
+  background-color: red;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  background: #FF9800;
+  transform: translate(-50%, -50%);
+  animation: dance-fire 3s infinite linear;
+}
+
+.bombCandle {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+@keyframes dance-fire {
+  0% {
+    height: 14px;
+    background: #FFC107;
+    left: 13%
+  }
+
+  50% {
+    left: 13.5%;
+    width: 10px;
+    height: 18px;
+    background: #FF9800;
+  }
+
+  100% {
+    left: 13.1%;
+    height: 15px;
+    background: #FF9800;
+  }
+}
+
+
+
+.btnsTop i {
+  color: var(--text-color);
+  
+}

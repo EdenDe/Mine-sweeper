@@ -3,14 +3,16 @@
 const ICONS = {
   FLAG: '<i class="fa fa-flag"></i>',
   EMPTY: ' ',
-  MINE: '<i class="fa fa-bomb"></i>',
+  MINE: '<div class="bombCandle">  <i class="fa fa-bomb"> </i> </div>',
+  EXPLOSION: '<div class="bombCandle">  <i class="fa fa-bomb"> </i>   <div class="candle2__fire "></div></div>',
   HEART: '<i class="fa fa-heart"></i>',
   HINT: '<i onclick="onHintClick(this)" class="fa fa-lightbulb-o"></i>',
   NORMAL: '&#128512;',
+  SUPRISED:'&#128558;',
   LOSE: '&#128557;',
   AWESOME: '&#128526;',
-  MOON: '<i class="fa fa-moon-o"></i>',
-  SUN: '<i class="fa fa-sun-o"></i>',
+  PICKAXE: '<i> &#9935; </i>',
+  DONE:'<i> &#10004; </i>'
 }
 
 var gStatesSave
@@ -36,6 +38,7 @@ function onInit() {
   }
 
   gBoard = buildBoard(gLevel.SIZE)
+  gGame.isOn = true
   renderBoard(gBoard)
   resetHeader()
   getTopScores()
@@ -44,8 +47,6 @@ function onInit() {
     games: []
   }
   toggleButtons(true)
-  gGame.isOn = true
- // saveStateGame(gBoard)
 }
 
 
@@ -116,9 +117,10 @@ function saveStateGame() {
   gStatesSave.games.push(copyGame)
 }
 
-function toggleTheme(elBtn) {
-  elBtn.innerHTML = elBtn.innerHTML === ICONS.SUN ? ICONS.MOON : ICONS.SUN
-  document.body.classList.toggle('dark')
+function toggleTheme() {
+  document.querySelector(".sun-logo").classList.toggle("animate-sun");
+  document.querySelector(".moon-logo").classList.toggle("animate-moon");
+  document.querySelector("body").classList.toggle("dark");
 }
 
 

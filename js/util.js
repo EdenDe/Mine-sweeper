@@ -9,7 +9,7 @@ function renderBoard(board) {
     for (var j = 0; j < board[0].length; j++) {
       const cell = board[i][j]
    
-      var data = `data-minesAround="${cell.minesAroundCount}"`
+      var data = `data-i="${i}" data-j="${j}" data-minesAround="${cell.minesAroundCount}"`
       var classes = 'cell'
       var insertHTML = ICONS.EMPTY
       if (cell.isShown) {
@@ -22,12 +22,15 @@ function renderBoard(board) {
           insertHTML = ICONS.MINE
         }
       }
+      else {
+        classes += ' covered'
+      }
       if (cell.isMarked){
         insertHTML = ICONS.FLAG
         data = ''
       }
 
-      strHTML += `<td data-i="${i}" data-j="${j}" ${data} class=" ${classes}" oncontextmenu="onCellMarked(this,${i},${j})" onclick="onCellClicked(this,${i},${j})">  ${insertHTML}  </td>`
+      strHTML += `<td ${data} class=" ${classes}" oncontextmenu="onCellMarked(this,${i},${j})" onclick="onCellClicked(this,${i},${j})">  ${insertHTML}  </td>`
     }
     strHTML += '</tr>'
   }
@@ -35,12 +38,27 @@ function renderBoard(board) {
 
   document.querySelector('.board').innerHTML = strHTML
 
-  document.querySelectorAll('.cell').forEach(td =>
+  document.querySelectorAll('.cell').forEach(td =>{
     td.addEventListener('contextmenu', (e) => {
       e.preventDefault()
-    }),
-  )
+    })
+  })
+  if(gGame.isOn){
+  document.querySelectorAll('.cell.covered').forEach(td =>{
+    td.addEventListener('mouseenter',changeSmileyToSuprised)
+    td.addEventListener('mouseleave',changeSmileyToNormal)
+  })}
+  
 }
+
+function changeSmileyToSuprised(){
+  document.querySelector('.smile span').innerHTML = ICONS.SUPRISED
+}
+
+function changeSmileyToNormal(){
+  document.querySelector('.smile span').innerHTML = ICONS.NORMAL
+}
+
 
 function renderCell(location, value) {
   const elCell = document.querySelector(`[data-i="${location.i}"][data-j="${location.j}"]`)
