@@ -10,7 +10,7 @@ var gIntervalGhosts
 function createGhosts(board) {
     gGhosts = []
 
-    for (let i = 0; i < 3; i++) {
+    for (var i = 0; i < 3; i++) {
         createGhost(board)
     }
     gIntervalGhosts = setInterval(moveGhosts, 1000)
